@@ -12,8 +12,6 @@ class Chirp extends Model
         'message',
     ];
 
-
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -21,6 +19,16 @@ class Chirp extends Model
 
     public function likes(): HasMany
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Like::class);
+    }
+
+    public function isLikedBy(User $user)
+    {
+        return $this->likes()->where('user_id', $user->id)->exists();
+    }
+
+    public function likedBy()
+    {
+        return $this->belongsToMany(User::class, 'likes')->withTimestamps();
     }
 }

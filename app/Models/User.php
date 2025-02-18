@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -47,8 +48,28 @@ class User extends Authenticatable
         ];
     }
 
-    public function chirps():HasMany{
+    public function chirps(): HasMany
+    {
         return $this->hasMany(Chirp::class);
     }
 
+    public function likedChirps(): BelongsToMany
+    {
+        return $this->belongsToMany(Chirp::class, 'likes')->withTimestamps();
+    }
+
+    public function followers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'follows', 'by_id', 'to_id')->withTimestamps();
+    }
+
+    public function following(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'follows', 'to_id', 'by_id')->withTimestamps();
+    }
+
+    public function isFollowing(User $user)
+    {
+        return $this->following->contains($user);
+    }
 }
