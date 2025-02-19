@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,4 +39,15 @@ Route::resource('follows', FollowController::class)
 
 Route::post('/chirps/{chirp}/like', [LikeController::class, 'toggleLike'])->middleware('auth')->name('chirps.like');
 
+Route::resource('products', ProductController::class)
+    ->only(['index', 'show'])
+    ->middleware(['auth', 'verified']);
+
+Route::post('/add-to-cart/{product}', [
+    CartController::class,
+    'addToCart'
+])->middleware(['auth', 'verified'])->name('product.add-to-cart');
+
+
+require __DIR__ . '/order.php';
 require __DIR__ . '/auth.php';

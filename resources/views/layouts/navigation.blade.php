@@ -18,6 +18,14 @@
                     <x-nav-link :href="route('chirps.index')" :active="request()->routeIs('chirps.index')">
                         {{ __('Chirps') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
+                        {{ __('Products') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('order.list')" :active="request()->routeIs('order.list')">
+                        {{ __('My Orders') }}
+                    </x-nav-link>
                 </div>
 
                 
@@ -77,6 +85,14 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('chirps.index')" :active="request()->routeIs('chirps.index')">
                 {{ __('Chirps') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
+                {{ __('Products') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('order.list')" :active="request()->routeIs('order.list')">
+                {{ __('My Orders') }}
             </x-responsive-nav-link>
         </div>
 

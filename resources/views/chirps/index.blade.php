@@ -12,7 +12,7 @@
 
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
             @foreach ($chirps as $chirp)
-               @include('chirps.partials.show_chirp_card', ["chirp"=>$chirp])
+               @include('chirps.partials.show-chirp-card', ["chirp"=>$chirp])
             @endforeach
         </div>
     </div>

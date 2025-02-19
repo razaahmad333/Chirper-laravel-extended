@@ -16,7 +16,7 @@
     </div>
 
 
-    <div class="mb-4 max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="mb-4 max-w-2xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
             <h2 class="mb-4 text-lg font-semibold">My Chirps</h2>
 
@@ -24,13 +24,13 @@
                 <p>You haven't created any chirps yet.</p>
             @else
                 @foreach ($myChirps as $chirp)
-                    @include('chirps.partials.show_chirp_card', ["chirp"=>$chirp])
+                    @include('chirps.partials.show-chirp-card', ["chirp"=>$chirp])
                 @endforeach
             @endif
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
             <h2 class="mb-4 text-lg font-semibold">Liked Chirps ❤️</h2>
 
@@ -38,7 +38,7 @@
                 <p>You haven't liked any chirps yet.</p>
             @else
                 @foreach ($likedChirps as $chirp)
-                    @include('chirps.partials.show_chirp_card', ["chirp"=>$chirp])
+                    @include('chirps.partials.show-chirp-card', ["chirp"=>$chirp])
                 @endforeach
             @endif
         </div>

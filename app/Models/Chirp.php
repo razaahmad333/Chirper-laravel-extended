@@ -10,11 +10,17 @@ class Chirp extends Model
 {
     protected $fillable = [
         'message',
+        'product_id',
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class);
     }
 
     public function likes(): HasMany
@@ -31,4 +37,5 @@ class Chirp extends Model
     {
         return $this->belongsToMany(User::class, 'likes')->withTimestamps();
     }
+    
 }

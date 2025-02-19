@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chirp;
+use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -34,11 +35,17 @@ class ChirpController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'message' => 'required|string|max:255'
+            'message' => 'required|string|max:255',
+            "product_id" => "string|exists:products,id"
         ]);
 
+        $productId = $validated['product_id'];
 
         $request->user()->chirps()->create($validated);
+
+        if ($productId) {
+            return redirect(route('products.show', ['product' => Product::find($productId)]));
+        }
 
         return redirect(route('chirps.index'));
     }
@@ -76,13 +83,13 @@ class ChirpController extends Controller
 
         $chirp->update($validated);
 
-        return redirect(route('chirps.index'));
+        return redirect(route('chirps.show'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Chirp $chirp):RedirectResponse
+    public function destroy(Chirp $chirp): RedirectResponse
     {
         Gate::authorize('delete', $chirp);
         $chirp->delete();

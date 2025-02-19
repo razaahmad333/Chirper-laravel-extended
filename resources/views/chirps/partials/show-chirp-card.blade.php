@@ -7,7 +7,7 @@
     <div class="flex-1">
         <div class="flex justify-between items-center">
             <div>
-                <span class="text-gray-800">{{ $chirp->user->name }}</span>
+                <a href="{{route('user.show', $chirp->user)}}" class="text-gray-800">{{ $chirp->user->name }}</a>
 
                 <small class="ml-2 text-sm text-gray-600">{{ $chirp->created_at->format('j M Y, g:i a') }}</small>
                 @unless ($chirp->created_at->eq($chirp->updated_at))
@@ -30,15 +30,16 @@
                         <x-dropdown-link :href="route('chirps.edit', $chirp)">
                             {{ __('Edit') }}
                         </x-dropdown-link>
+                        <form method="POST" action="{{ route('chirps.destroy', $chirp) }}">
+                            @csrf
+                            @method('delete')
+                            <x-dropdown-link :href="route('chirps.destroy', $chirp)" onclick="event.preventDefault(); this.closest('form').submit();">
+                                {{ __('Delete') }}
+                            </x-dropdown-link>
+                        </form>
                     </x-slot>
                 </x-dropdown>
-                <form method="POST" action="{{ route('chirps.destroy', $chirp) }}">
-                    @csrf
-                    @method('delete')
-                    <x-dropdown-link :href="route('chirps.destroy', $chirp)" onclick="event.preventDefault(); this.closest('form').submit();">
-                        {{ __('Delete') }}
-                    </x-dropdown-link>
-                </form>
+               
             @endif
 
             @if (!$chirp->user->is(auth()->user()))
@@ -51,6 +52,14 @@
             data-chirp-id="{{ $chirp->id }}">
             ❤️ <span class="like-count">{{ $chirp->likes->count() }}</span>
         </button>
+        <br>
+        @if ($chirp->product)
+            <p class="text-xs text-gray-400 font-bold mt-2">reviews the product
+                <a href="{{ route('products.show', $chirp->product) }}">
+                    {{ $chirp->product->name }}
+                </a>
+            </p>
+        @endif
     </div>
 </div>
 
